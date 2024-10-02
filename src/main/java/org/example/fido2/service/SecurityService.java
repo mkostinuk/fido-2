@@ -1,9 +1,10 @@
 package org.example.fido2.service;
 
+import org.example.fido2.domain.model.Role;
 import org.example.fido2.security.jwt.JwtCore;
 import org.example.fido2.dao.UserRepository;
-import org.example.fido2.domain.dto.SignInRequest;
-import org.example.fido2.domain.dto.SignUpRequest;
+import org.example.fido2.domain.dto.SignInRequestBean;
+import org.example.fido2.domain.dto.SignUpRequestBean;
 import org.example.fido2.domain.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,13 +28,13 @@ public class SecurityService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public String signIn(SignInRequest request) {
+    public String signIn(SignInRequestBean request) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return jwtCore.generateToken(authentication);
     }
-    public void register(SignUpRequest request) {
+    public void register(SignUpRequestBean request) {
         if(request==null){
             throw new IllegalArgumentException("All fields must be filled out");
         }
@@ -45,6 +46,7 @@ public class SecurityService {
                 .name(request.getName())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .age(request.getAge())
+                .role(Role.USER)
                 .build();
         repository.save(user);
     }

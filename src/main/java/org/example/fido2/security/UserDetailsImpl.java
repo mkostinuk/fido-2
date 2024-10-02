@@ -2,8 +2,10 @@ package org.example.fido2.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.example.fido2.domain.model.Role;
 import org.example.fido2.domain.model.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -15,23 +17,21 @@ import java.util.UUID;
 public class UserDetailsImpl implements UserDetails {
     private UUID id;
     private String username;
-    private String name;
     private String password;
-    private int age;
+    private Role role;
 
     public static UserDetailsImpl build(User user) {
 
         return new UserDetailsImpl(
                 user.getId(),
                 user.getUsername(),
-                user.getName(),
                 user.getPassword(),
-                user.getAge()
+                user.getRole()
                 );
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority("ROLE_"+role.name()));
     }
 
     @Override

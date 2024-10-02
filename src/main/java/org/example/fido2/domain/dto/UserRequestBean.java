@@ -3,7 +3,7 @@ package org.example.fido2.domain.dto;
 import lombok.Data;
 
 @Data
-public class SignUpRequest {
+public class UserRequestBean {
     private String username;
     private String name;
     private int age;

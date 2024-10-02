@@ -1,9 +1,8 @@
 package org.example.fido2.controller;
 
-import org.example.fido2.domain.dto.SignInRequest;
-import org.example.fido2.domain.dto.SignUpRequest;
+import org.example.fido2.domain.dto.SignInRequestBean;
+import org.example.fido2.domain.dto.SignUpRequestBean;
 import org.example.fido2.service.SecurityService;
-import org.example.fido2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,16 +22,17 @@ public class SecurityController {
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<?> signUp(@RequestBody SignUpRequest request) {
+    public ResponseEntity<?> signUp(@RequestBody SignUpRequestBean request) {
         try {
             securityService.register(request);
             return ResponseEntity.ok("You are successfully registered");
-        }catch (IllegalArgumentException e){
+        }
+        catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
     @PostMapping("/signIn")
-    public ResponseEntity<?> signIn(@RequestBody SignInRequest request){
+    public ResponseEntity<?> signIn(@RequestBody SignInRequestBean request){
         String token = null;
         try{
             token = securityService.signIn(request);

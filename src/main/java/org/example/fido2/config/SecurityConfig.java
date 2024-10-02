@@ -1,5 +1,6 @@
 package org.example.fido2.config;
 
+import org.example.fido2.domain.model.Role;
 import org.example.fido2.security.jwt.TokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -45,7 +46,8 @@ public class SecurityConfig  {
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/auth/**").anonymous()
-                        .requestMatchers("/api/users/**").authenticated()
+                        .requestMatchers("/api/users/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                        .requestMatchers("/api/admin/**").hasRole(Role.ADMIN.name())
                         .anyRequest().permitAll()
                 )
 
@@ -60,6 +62,6 @@ public class SecurityConfig  {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-      return   authenticationConfiguration.getAuthenticationManager();
+      return  authenticationConfiguration.getAuthenticationManager();
     }
 }

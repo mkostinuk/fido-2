@@ -3,7 +3,7 @@ package org.example.fido2.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -22,11 +22,13 @@ public class User {
     @Column(nullable = false)
     private String password;
     private int age;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @ManyToMany
     @JoinTable(
             name = "user_friends",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
-    private Set<User> friends;
+    private List<User> friends;
 }
