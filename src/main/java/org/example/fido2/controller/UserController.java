@@ -59,7 +59,7 @@ public class UserController {
         return userService.getFriendsOf(username);
     }
 
-    @DeleteMapping("/friends")
+    @DeleteMapping("/deleteFriends")
     private ResponseEntity<?> deleteFriend(@RequestParam String username) {
         try{
             userService.deleteFriend(username);

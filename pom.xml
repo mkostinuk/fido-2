@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.example</groupId>
     <artifactId>fido-2</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.1</version>
     <name>fido-2</name>
     <description>fido-2</description>
     <url/>
@@ -69,6 +69,9 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+
+
     </dependencies>
 
     <build>
